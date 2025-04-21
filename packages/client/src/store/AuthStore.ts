@@ -3,9 +3,8 @@ import { persist } from "zustand/middleware"
 import api from "../services/axios"
 
 interface User {
-  id: string
+  _id: string
   email: string
-  name: string
 }
 
 interface AuthState {
@@ -27,7 +26,6 @@ export const useAuthStore = create<AuthState>()(
       isLoading: true,
 
       login: async (email: string, password: string) => {
-        try {
           const response = await api.post("/auth/login", { email, password })
           const { accessToken, refreshToken, user } = response.data
 
@@ -39,13 +37,9 @@ export const useAuthStore = create<AuthState>()(
           api.defaults.headers.common["Authorization"] = `Bearer ${accessToken}`
 
           set({ user, isAuthenticated: true })
-        } catch (error) {
-          throw error
-        }
       },
 
       register: async (email: string, password: string) => {
-        try {
           const response = await api.post("/auth/signup", { email, password })
           const { accessToken, refreshToken, user } = response.data
 
@@ -55,9 +49,6 @@ export const useAuthStore = create<AuthState>()(
           api.defaults.headers.common["Authorization"] = `Bearer ${accessToken}`
 
           set({ user, isAuthenticated: true })
-        } catch (error) {
-          throw error
-        }
       },
 
       logout: () => {
@@ -76,8 +67,8 @@ export const useAuthStore = create<AuthState>()(
             api.defaults.headers.common["Authorization"] = `Bearer ${token}`
             const response = await api.get("/auth/me")
             set({ user: response.data, isAuthenticated: true })
+
           } catch (error) {
-            // If token is expired, try to refresh
             try {
               await get().refreshToken()
             } catch (refreshError) {
@@ -99,7 +90,6 @@ export const useAuthStore = create<AuthState>()(
           throw new Error("No refresh token available")
         }
 
-        try {
           const response = await api.post("/auth/refresh", { refreshToken })
           const { accessToken, newRefreshToken } = response.data
 
@@ -112,9 +102,6 @@ export const useAuthStore = create<AuthState>()(
           set({ user: userResponse.data, isAuthenticated: true })
 
           return accessToken
-        } catch (error) {
-          throw error
-        }
       },
     }),
     {

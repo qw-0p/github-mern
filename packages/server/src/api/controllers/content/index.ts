@@ -5,6 +5,8 @@ import * as contentService from '../../../db/services/ContentService';
 export const create = async (payload: CreateContentDto) => {
   const { name, userId } = payload;
 
+  console.log(userId);
+
   return await contentService.create(name, userId);
 }
 

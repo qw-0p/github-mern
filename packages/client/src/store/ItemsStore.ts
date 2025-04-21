@@ -34,7 +34,7 @@ export const useItemsStore = create<ItemsState>((set) => ({
     try {
       const response = await api.get("/")
       set({ items: response.data, isLoading: false })
-    } catch (err: any) {
+    } catch (err: unknown) {
       set({
         error: err.response?.data?.message || "Failed to fetch items. Please try again.",
         isLoading: false,
@@ -48,12 +48,14 @@ export const useItemsStore = create<ItemsState>((set) => ({
 
     set({ error: null })
     try {
+      console.log(user, 'user');
       const response = await api.post("/", {
         name,
-        userId: user?.id
+        userId: user?._id
       })
+
       set((state) => ({ items: [response.data, ...state.items ] }))
-    } catch (err: any) {
+    } catch (err: unknown) {
       set({ error: err.response?.data?.message || "Failed to add item. Please try again." })
       console.error(err)
     }
