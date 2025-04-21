@@ -1,8 +1,6 @@
 packages:
   - packages/*
 
-ignoredBuiltDependencies:
-  - bcrypt
-
 onlyBuiltDependencies:
   - argon2
+  - esbuild
