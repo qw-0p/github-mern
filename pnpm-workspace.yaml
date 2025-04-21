@@ -3,3 +3,6 @@ packages:
 
 ignoredBuiltDependencies:
   - bcrypt
+
+onlyBuiltDependencies:
+  - argon2

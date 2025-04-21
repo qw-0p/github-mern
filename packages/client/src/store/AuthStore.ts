@@ -31,6 +31,8 @@ export const useAuthStore = create<AuthState>()(
           const response = await api.post("/auth/login", { email, password })
           const { accessToken, refreshToken, user } = response.data
 
+
+
           localStorage.setItem("accessToken", accessToken)
           localStorage.setItem("refreshToken", refreshToken)
 
@@ -98,7 +100,7 @@ export const useAuthStore = create<AuthState>()(
         }
 
         try {
-          const response = await api.post("/auth/refresh-token", { refreshToken })
+          const response = await api.post("/auth/refresh", { refreshToken })
           const { accessToken, newRefreshToken } = response.data
 
           localStorage.setItem("accessToken", accessToken)
@@ -106,7 +108,6 @@ export const useAuthStore = create<AuthState>()(
 
           api.defaults.headers.common["Authorization"] = `Bearer ${accessToken}`
 
-          // Get user data with new token
           const userResponse = await api.get("/auth/me")
           set({ user: userResponse.data, isAuthenticated: true })
 

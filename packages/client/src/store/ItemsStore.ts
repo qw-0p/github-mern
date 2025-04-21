@@ -52,7 +52,7 @@ export const useItemsStore = create<ItemsState>((set) => ({
         name,
         userId: user?.id
       })
-      set((state) => ({ items: [...state.items, response.data] }))
+      set((state) => ({ items: [response.data, ...state.items ] }))
     } catch (err: any) {
       set({ error: err.response?.data?.message || "Failed to add item. Please try again." })
       console.error(err)

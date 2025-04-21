@@ -1,5 +1,5 @@
 import { Document, Schema, model } from "mongoose"
-import bcrypt from "bcrypt"
+import argon2 from 'argon2'
 
 export interface IUser extends Document {
   email: string
@@ -30,8 +30,7 @@ userSchema.pre<IUser>("save", async function (next) {
   if (!this.isModified("password")) return next()
 
   try {
-    const salt = await bcrypt.genSalt(10)
-    this.password = await bcrypt.hash(this.password, salt)
+    this.password = await argon2.hash(this.password)
     next()
   } catch (error: any) {
     next(error)
@@ -39,7 +38,7 @@ userSchema.pre<IUser>("save", async function (next) {
 })
 
 userSchema.methods.comparePassword = async function (candidatePassword: string): Promise<boolean> {
-  return bcrypt.compare(candidatePassword, this.password)
+  return argon2.verify(this.password, candidatePassword)
 }
 
 export default model<IUser>("User", userSchema)

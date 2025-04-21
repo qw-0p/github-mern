@@ -14,7 +14,7 @@ const Auth = () => {
   const navigate = useNavigate()
 
   if (isAuthenticated) {
-    navigate("/")
+    () => navigate("/")
   }
 
   const handleSubmit = async (e: React.FormEvent) => {

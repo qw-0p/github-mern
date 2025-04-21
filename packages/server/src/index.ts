@@ -1,6 +1,9 @@
 import express, {Application} from "express";
 import router from "./api/routes";
+import cors from "cors";
 import { createDatabase } from './db/createDatabase';
+import dotenv from 'dotenv';
+dotenv.config();
 
 const PORT = process.env.PORT || 4000
 
@@ -12,6 +15,8 @@ export const get = async () => {
     const app: Application = express();
 
     app.use(express.json());
+
+    app.use(cors());
 
     app.use("/api/v1", router);
 

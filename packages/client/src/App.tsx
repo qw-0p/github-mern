@@ -17,7 +17,7 @@ const App = ()=> {
         <Navbar className="bg-primary position-relative">
           {isLoading && <Spinner className="position-absolute left-20" animation="border" variant="dark" />}
           <Container>
-            <Navbar.Brand href="#home">{user?.email}</Navbar.Brand>
+            <Navbar.Brand>{user?.email}</Navbar.Brand>
             <Navbar.Toggle />
             <Navbar.Collapse className="justify-content-end">
               {

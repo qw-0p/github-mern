@@ -34,7 +34,7 @@ api.interceptors.response.use(
           return Promise.reject(error)
         }
 
-        const response = await axios.post("http://localhost:5000/api/auth/refresh-token", {
+        const response = await axios.post("http://localhost:4000/api/v1/auth/refresh", {
           refreshToken,
         })
 
